@@ -25,6 +25,11 @@ const endAngle = (angle) => angle - HALF_PI;
 
 const timer = () => {
   timeLeft -= 1;
+  let time = timeLeft;
+  time = time < 0 ? (time += 3600) : time;
+  var minutes = Math.floor(time / 60);
+  var seconds = Math.floor(time - minutes * 60);
+  document.title = `${minutes}m ${seconds}s`;
 };
 
 const coordsOffsetFromEdge = (offset, angle) => ({
