@@ -7,7 +7,9 @@ let timeLeft;
 
 function setSize() {
   const windowSize = min(windowWidth, windowHeight);
-  size = maxSize < windowSize ? maxSize : windowSize / 2 - 40;
+  size = maxSize < windowSize ? maxSize : windowSize - 80;
+  centerX = width / 2;
+  centerY = height / 2;
 }
 
 function windowResized() {
@@ -23,7 +25,6 @@ const endAngle = (angle) => angle - HALF_PI;
 
 const timer = () => {
   timeLeft -= 1;
-  console.log(timeLeft);
 };
 
 const coordsOffsetFromEdge = (offset, angle) => ({
@@ -78,8 +79,6 @@ function setup() {
   timeLeft = 5 * 60;
   currentTime = timeToAngle(timeLeft) + HALF_PI;
   setSize();
-  centerX = width / 2;
-  centerY = height / 2;
   counter = setInterval(timer, 1000);
 }
 
