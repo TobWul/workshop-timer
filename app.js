@@ -86,7 +86,6 @@ function draw() {
   background(220);
   const distance = dist(mouseX, mouseY, centerX, centerY);
   if (mouseIsPressed && distance < size / 2) {
-    console.log(distance);
     updateTime(mouseX, mouseY);
     fill(red);
   }
