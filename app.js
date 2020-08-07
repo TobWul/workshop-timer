@@ -121,7 +121,7 @@ function draw() {
   } else {
     fill(red);
   }
-  textAlign(RIGHT);
+  textAlign(BOTTOM, RIGHT);
   drawTimer(timeToAngle(timeLeft) + HALF_PI);
-  text(remainingText(), width - 100, height - 40);
+  text(remainingText(), width - 100, height - 52);
 }
