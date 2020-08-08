@@ -105,7 +105,7 @@ function preload() {
 
 function setup() {
   textFont("Helvetica");
-  frameRate(1);
+  frameRate(60);
   createCanvas(windowWidth, windowHeight);
   timeLeft = 5 * 60;
   currentTime = timeToAngle(timeLeft) + HALF_PI;
