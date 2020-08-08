@@ -6,6 +6,9 @@ const clickColor = 178;
 const gray = 245;
 let counter;
 let timeLeft;
+let alarmSound;
+let pause;
+let defaultStartTime = 8 * 60;
 
 function setSize() {
   const windowSize = min(windowWidth, windowHeight);
@@ -36,7 +39,12 @@ const remainingText = () => {
 };
 
 const timer = () => {
-  timeLeft -= 1;
+  timeLeft -= pause ? 0 : 1;
+  if (timeLeft < 0 && !pause) {
+    pause = true;
+    timeLeft = 0;
+    alarmSound.play();
+  }
   document.title = remainingText();
 };
 
@@ -96,6 +104,11 @@ const updateTime = (x, y) => {
 
   let angleBetween = v1.angleBetween(v2);
   timeLeft = 2 * PI - (1800 * angleBetween) / PI;
+  timeLeft = timeLeft >= 0 ? timeLeft : timeLeft + 3600;
+};
+
+const soundSetup = () => {
+  alarmSound = loadSound("assets/alarm-clock.mp3");
 };
 
 // Setup and loop
@@ -105,9 +118,11 @@ function preload() {
 
 function setup() {
   textFont("Helvetica");
+  pause = false;
+  soundSetup();
   frameRate(60);
   createCanvas(windowWidth, windowHeight);
-  timeLeft = 5 * 60;
+  timeLeft = defaultStartTime;
   currentTime = timeToAngle(timeLeft) + HALF_PI;
   setSize();
   counter = setInterval(timer, 1000);
@@ -118,6 +133,9 @@ function draw() {
   const distance = dist(mouseX, mouseY, centerX, centerY);
   if (mouseIsPressed && distance < size / 2) {
     updateTime(mouseX, mouseY);
+    pause = false;
+  }
+  if ((mouseIsPressed && distance < size / 2) || pause) {
     fill(clickColor);
   } else {
     fill(red);
