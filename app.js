@@ -45,7 +45,7 @@ const timer = () => {
     timeLeft = 0;
     alarmSound.play();
   }
-  document.title = remainingText();
+  document.title = `⏰ ${remainingText()}`;
 };
 
 const coordsOffsetFromEdge = (offset, angle) => ({
