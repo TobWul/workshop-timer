@@ -1,3 +1,4 @@
+
 const maxSize = 800;
 let size, x, y, currentTime, centerX, centerY;
 let font;
@@ -5,6 +6,7 @@ const red = [255, 91, 81];
 const clickColor = 178;
 const gray = 245;
 let counter;
+let alarmTime = new Date();
 let timeLeft;
 let alarmSound;
 let pause;
@@ -21,6 +23,8 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   setSize();
 }
+
+const timeDifferenceToSeconds = () => (alarmTime.getTime() - (new Date).getTime()) / 1000;
 
 const timeToAngle = (time) => 2 * PI - HALF_PI - (time * PI) / 1800;
 
@@ -39,7 +43,7 @@ const remainingText = () => {
 };
 
 const timer = () => {
-  timeLeft -= pause ? 0 : 1;
+  timeLeft = pause ? timeLeft : timeDifferenceToSeconds();
   if (timeLeft < 0 && !pause) {
     pause = true;
     timeLeft = 0;
@@ -105,6 +109,9 @@ const updateTime = (x, y) => {
   let angleBetween = v1.angleBetween(v2);
   timeLeft = 2 * PI - (1800 * angleBetween) / PI;
   timeLeft = timeLeft >= 0 ? timeLeft : timeLeft + 3600;
+  alarmTime = new Date();
+  alarmTime.setSeconds(alarmTime.getSeconds() + timeLeft)
+  console.log(alarmTime.getMinutes() + ":" + alarmTime.getSeconds());
 };
 
 const soundSetup = () => {
@@ -123,6 +130,7 @@ function setup() {
   frameRate(60);
   createCanvas(windowWidth, windowHeight);
   timeLeft = defaultStartTime;
+  alarmTime.setSeconds(alarmTime.getSeconds() + defaultStartTime)
   currentTime = timeToAngle(timeLeft) + HALF_PI;
   setSize();
   counter = setInterval(timer, 1000);
