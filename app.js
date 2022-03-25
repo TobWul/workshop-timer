@@ -1,4 +1,3 @@
-
 const maxSize = 800;
 let size, x, y, currentTime, centerX, centerY;
 let font;
@@ -24,7 +23,8 @@ function windowResized() {
   setSize();
 }
 
-const timeDifferenceToSeconds = () => (alarmTime.getTime() - (new Date).getTime()) / 1000;
+const timeDifferenceToSeconds = () =>
+  (alarmTime.getTime() - new Date().getTime()) / 1000;
 
 const timeToAngle = (time) => 2 * PI - HALF_PI - (time * PI) / 1800;
 
@@ -110,12 +110,12 @@ const updateTime = (x, y) => {
   timeLeft = 2 * PI - (1800 * angleBetween) / PI;
   timeLeft = timeLeft >= 0 ? timeLeft : timeLeft + 3600;
   alarmTime = new Date();
-  alarmTime.setSeconds(alarmTime.getSeconds() + timeLeft)
+  alarmTime.setSeconds(alarmTime.getSeconds() + timeLeft);
   console.log(alarmTime.getMinutes() + ":" + alarmTime.getSeconds());
 };
 
 const soundSetup = () => {
-  alarmSound = loadSound("assets/alarm-clock.mp3");
+  alarmSound = loadSound("assets/alarm-ring.mp3");
 };
 
 // Setup and loop
@@ -130,7 +130,7 @@ function setup() {
   frameRate(60);
   createCanvas(windowWidth, windowHeight);
   timeLeft = defaultStartTime;
-  alarmTime.setSeconds(alarmTime.getSeconds() + defaultStartTime)
+  alarmTime.setSeconds(alarmTime.getSeconds() + defaultStartTime);
   currentTime = timeToAngle(timeLeft) + HALF_PI;
   setSize();
   counter = setInterval(timer, 1000);
